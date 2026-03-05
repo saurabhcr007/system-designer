@@ -13,7 +13,7 @@
 
 **FlowForge** is an open-source, browser-based system architecture designer with real-time traffic simulation, node stress visualization, and topology-aware packet routing.
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-flowforge.io-38bdf8?style=for-the-badge)](https://saurabhcr007.github.io/flowforge)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-flowforge.io-38bdf8?style=for-the-badge)](https://saurabhcr007.github.io/FlowForge-Interactive-System-Designer)
 [![MIT License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)](https://react.dev)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-f472b6?style=for-the-badge)](CONTRIBUTING.md)
@@ -93,14 +93,14 @@ Every node has a live stress level (`currentRPS / maxCapacity`) displayed as:
 ## 🚀 Quick Start
 
 ### Option 1 — Use the Live Version
-Just go to **[YOUR_USERNAME.github.io/flowforge](https://saurabhcr007.github.io/flowforge)** — no install needed.
+Just go to **[saurabhcr007.github.io/FlowForge-Interactive-System-Designer](https://saurabhcr007.github.io/FlowForge-Interactive-System-Designer)** — no install needed.
 
 ### Option 2 — Run Locally
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YOUR_USERNAME/flowforge.git
-cd flowforge
+git clone https://github.com/saurabhcr007/FlowForge-Interactive-System-Designer.git
+cd FlowForge-Interactive-System-Designer
 
 # 2. Install dependencies
 npm install
@@ -129,7 +129,7 @@ In `vite.config.js`, set the base to your repo name:
 
 ```js
 export default defineConfig({
-  base: '/flowforge/',   // replace with your repo name
+  base: '/FlowForge-Interactive-System-Designer/',   // replace with your repo name
   plugins: [react()],
 })
 ```
@@ -138,7 +138,7 @@ export default defineConfig({
 
 ```json
 {
-  "homepage": "https://YOUR_USERNAME.github.io/flowforge",
+  "homepage": "https://saurabhcr007.github.io/FlowForge-Interactive-System-Designer",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
@@ -162,14 +162,14 @@ npm run deploy
 
 Go to your repo → **Settings** → **Pages** → Source: `gh-pages` branch → Save.
 
-Your app will be live at `https://YOUR_USERNAME.github.io/flowforge` within 2 minutes.
+Your app will be live at `https://saurabhcr007.github.io/FlowForge-Interactive-System-Designer` within 2 minutes.
 
 ---
 
 ## 🗂️ Project Structure
 
 ```
-flowforge/
+FlowForge-Interactive-System-Designer/
 ├── public/
 │   └── favicon.svg
 ├── src/
@@ -250,7 +250,7 @@ Contributions are welcome! Here's how to get started:
 
 ```bash
 # Fork the repo, then clone your fork
-git clone https://github.com/YOUR_USERNAME/flowforge.git
+git clone https://github.com/saurabhcr007/FlowForge-Interactive-System-Designer.git
 
 # Create a feature branch
 git checkout -b feature/my-new-component
@@ -287,7 +287,7 @@ git push origin feature/my-new-component
 - [ ] Export to PNG/PDF
 - [ ] Collaborative editing
 - [ ] Terraform YAML import
-- [ ] Mobile responsive view
+- [x] Mobile responsive view
 
 ---
 
@@ -314,6 +314,6 @@ Built by **[Saurabh Chaudhary](https://github.com/saurabhcr007)**
 
 If FlowForge helped you, please consider giving it a ⭐ — it helps others discover the project!
 
-**[⭐ Star on GitHub](https://github.com/saurabhcr007/flowforge)**
+**[⭐ Star on GitHub](https://github.com/saurabhcr007/FlowForge-Interactive-System-Designer)****
 
 </div>
