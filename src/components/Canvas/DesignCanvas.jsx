@@ -18,11 +18,14 @@ import { findComponentById } from '../../data/components';
 import { decodeFromURL } from '../../utils/shareLink';
 import { starterTemplate } from '../../data/starterTemplate';
 import { LayoutTemplate, MousePointerClick } from 'lucide-react';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function DesignCanvasInner() {
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [contextMenu, setContextMenu] = useState(null);
+
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     const {
         nodes,
@@ -37,9 +40,11 @@ function DesignCanvasInner() {
         setReactFlowInstance: storeSetInstance,
         loadDesign,
         isSimulating,
+        pendingComponent,
+        setPendingComponent,
     } = useDesignStore();
 
-    // Specific selector for minimap performance so it doesn't cause global re-renders
+    // ... existing selectors ...
     const storeNodeSimState = useDesignStore(s => s.nodeSimState);
 
     // Load from URL hash on mount
@@ -87,7 +92,6 @@ function DesignCanvasInner() {
                 },
             };
 
-            // Group nodes need explicit dimensions
             if (nodeType === 'group') {
                 newNodeData.style = { width: 400, height: 300 };
             }
@@ -100,7 +104,6 @@ function DesignCanvasInner() {
     // ── Connections ────────────────────────────
     const onConnect = useCallback(
         (params) => {
-            // Find source node color
             const sourceNode = nodes.find((n) => n.id === params.source);
             const sourceColor = sourceNode?.data?.color || '#818cf8';
 
@@ -117,6 +120,40 @@ function DesignCanvasInner() {
     );
 
     // ── Selection ──────────────────────────────
+    const onPaneClick = useCallback((event) => {
+        // Tap to place logic for mobile
+        if (isMobile && pendingComponent && reactFlowInstance) {
+            const position = reactFlowInstance.screenToFlowPosition({
+                x: event.clientX || (event.touches?.[0]?.clientX),
+                y: event.clientY || (event.touches?.[0]?.clientY),
+            });
+
+            const nodeType = pendingComponent.type === 'group' ? 'group' : pendingComponent.type === 'container' ? 'container' : 'base';
+
+            const newNodeData = {
+                type: nodeType,
+                position,
+                data: {
+                    label: pendingComponent.label,
+                    icon: pendingComponent.icon,
+                    color: pendingComponent.color,
+                    componentId: pendingComponent.id,
+                    ...pendingComponent.defaultData,
+                },
+            };
+
+            if (nodeType === 'group') {
+                newNodeData.style = { width: 400, height: 300 };
+            }
+
+            addNode(newNodeData);
+            setPendingComponent(null);
+        }
+
+        clearSelection();
+        setContextMenu(null);
+    }, [isMobile, pendingComponent, reactFlowInstance, addNode, setPendingComponent, clearSelection]);
+
     const onNodeClick = useCallback(
         (_, node) => {
             setSelectedNode(node.id);
@@ -132,11 +169,6 @@ function DesignCanvasInner() {
         },
         [setSelectedEdge]
     );
-
-    const onPaneClick = useCallback(() => {
-        clearSelection();
-        setContextMenu(null);
-    }, [clearSelection]);
 
     // ── Context Menu ───────────────────────────
     const onNodeContextMenu = useCallback((event, node) => {
@@ -215,6 +247,32 @@ function DesignCanvasInner() {
         }
     }, [contextMenu]);
 
+    // ── Mobile Drag vs Pan Disambiguation ──────
+    const [isDraggingNode, setIsDraggingNode] = useState(false);
+    const pressTimer = useRef(null);
+
+    const onNodeMouseEnter = useCallback(() => {
+        if (isMobile) {
+            // On touch device, MouseEnter fires when you start touching
+            pressTimer.current = setTimeout(() => {
+                setIsDraggingNode(true);
+            }, 150);
+        }
+    }, [isMobile]);
+
+    const onNodeMouseLeave = useCallback(() => {
+        if (isMobile) {
+            clearTimeout(pressTimer.current);
+            setIsDraggingNode(false);
+        }
+    }, [isMobile]);
+
+    const onNodeDragStop = useCallback(() => {
+        if (isMobile) {
+            setIsDraggingNode(false);
+        }
+    }, [isMobile]);
+
     return (
         <div ref={reactFlowWrapper} className="flex-1 h-full relative">
             <ReactFlow
@@ -229,6 +287,9 @@ function DesignCanvasInner() {
                 onNodeClick={onNodeClick}
                 onEdgeClick={onEdgeClick}
                 onPaneClick={onPaneClick}
+                onNodeMouseEnter={onNodeMouseEnter}
+                onNodeMouseLeave={onNodeMouseLeave}
+                onNodeDragStop={onNodeDragStop}
                 onNodeContextMenu={onNodeContextMenu}
                 onEdgeContextMenu={onEdgeContextMenu}
                 nodeTypes={nodeTypes}
@@ -243,8 +304,15 @@ function DesignCanvasInner() {
                 selectionKeyCode="Shift"
                 snapToGrid
                 snapGrid={[16, 16]}
-                minZoom={0.1}
-                maxZoom={4}
+                minZoom={0.2}
+                maxZoom={2}
+                // Mobile specific touch props
+                panOnScroll={!isMobile}
+                panOnDrag={!isDraggingNode}
+                zoomOnPinch={true}
+                zoomOnScroll={!isMobile}
+                preventScrolling={isMobile}
+                nodesDraggable={!isMobile || isDraggingNode}
             >
                 <Background
                     variant="dots"
@@ -256,13 +324,15 @@ function DesignCanvasInner() {
                     showInteractive={false}
                     position="bottom-left"
                 />
-                <MiniMap
-                    position="bottom-right"
-                    nodeStrokeWidth={3}
-                    nodeColor={(node) => storeNodeSimState[node.id]?.stressColor || node.data.color || '#1f2937'}
-                    pannable
-                    zoomable
-                />
+                {!isMobile && (
+                    <MiniMap
+                        position="bottom-right"
+                        nodeStrokeWidth={3}
+                        nodeColor={(node) => storeNodeSimState[node.id]?.stressColor || node.data.color || '#1f2937'}
+                        pannable
+                        zoomable
+                    />
+                )}
             </ReactFlow>
 
             {/* Simulation Overlay */}

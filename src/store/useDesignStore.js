@@ -49,7 +49,9 @@ const useDesignStore = create((set, get) => ({
 
     // ── UI State ───────────────────────────────
     inspectorOpen: true,
+    sidebarOpen: false,
     reactFlowInstance: null,
+    pendingComponent: null,
 
     // ── History (Undo/Redo) ────────────────────
     history: [],
@@ -220,6 +222,14 @@ const useDesignStore = create((set, get) => ({
 
     // Inspector
     toggleInspector: () => set((state) => ({ inspectorOpen: !state.inspectorOpen })),
+    setInspectorOpen: (open) => set({ inspectorOpen: open }),
+
+    // Sidebar
+    toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+    setSidebarOpen: (open) => set({ sidebarOpen: open }),
+
+    // Tap to Place
+    setPendingComponent: (component) => set({ pendingComponent: component }),
 
     // Import / Load
     loadDesign: (data) => {

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import useDesignStore from '../../store/useDesignStore';
 
 export default function ComponentCategory({ category }) {
     const [isOpen, setIsOpen] = useState(true);
@@ -38,16 +40,29 @@ export default function ComponentCategory({ category }) {
 }
 
 function DraggableItem({ component, index }) {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const setPendingComponent = useDesignStore((s) => s.setPendingComponent);
+    const setSidebarOpen = useDesignStore((s) => s.setSidebarOpen);
+
     const onDragStart = (e) => {
+        if (isMobile) return e.preventDefault();
         e.dataTransfer.setData('application/reactflow-type', JSON.stringify(component));
         e.dataTransfer.effectAllowed = 'move';
+    };
+
+    const onClick = () => {
+        if (isMobile) {
+            setPendingComponent(component);
+            setSidebarOpen(false);
+        }
     };
 
     return (
         <div
             className="draggable-component flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-white/70 hover:text-white hover:bg-white/[0.06] border border-transparent hover:border-white/[0.08] transition-all duration-200 group cursor-grab active:cursor-grabbing"
-            draggable
+            draggable={!isMobile}
             onDragStart={onDragStart}
+            onClick={onClick}
             style={{ animationDelay: `${index * 20}ms` }}
         >
             <span className="text-sm opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200">{component.icon}</span>

@@ -367,17 +367,39 @@ input {
 
 /* ── Node Stress Animations ── */
 @keyframes criticalPulse {
-  0% { box-shadow: 0 0 24px 8px #ef444499; }
-  50% { box-shadow: 0 0 36px 14px #ef4444cc; }
-  100% { box-shadow: 0 0 24px 8px #ef444499; }
+  0% {
+    box-shadow: 0 0 24px 8px #ef444499;
+  }
+
+  50% {
+    box-shadow: 0 0 36px 14px #ef4444cc;
+  }
+
+  100% {
+    box-shadow: 0 0 24px 8px #ef444499;
+  }
 }
 
 @keyframes overloadShake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-2px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(2px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .node-critical-pulse {
@@ -386,4 +408,59 @@ input {
 
 .node-overload-shake {
   animation: overloadShake 0.4s ease-in-out infinite;
+}
+
+/* ── Mobile Optimizations ── */
+@media (max-width: 768px) {
+  .react-flow__handle {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  /* Increase hit area for touch */
+  .react-flow__handle::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+  }
+
+  .react-flow__controls {
+    display: none !important;
+  }
+
+  .react-flow__minimap {
+    transform: scale(0.7);
+    transform-origin: bottom right;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
