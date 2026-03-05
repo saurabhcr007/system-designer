@@ -53,33 +53,43 @@
 - [x] Share via URL hash (base64)
 
 ## Phase 9: Final Polish & Deployment
-- [ ] Final visual polish & testing
-- [ ] Build verification
-- [ ] GitHub Pages deployment config
+- [x] Final visual polish & testing
+- [x] Build verification
+- [x] GitHub Pages deployment config
 
 ## Phase 10: Discrete Simulation Engine Rewrite
-- [x] Implement `SimulationEngine` class (requestAnimationFrame loop, packet routing, processing delays).
-- [x] Update `useDesignStore.js` to manage discrete packet state and actual stastistics.
-- [x] Update `useSimulation.js` hook to integrate the engine.
-- [x] Refactor `SimulationOverlay.jsx` to render `<animateMotion>` packets along precise SVG paths.
-- [x] Update `AnimatedEdge.jsx` to support exact path extraction for packet traversal.
-- [x] Enhance `BaseNode.jsx` with Framer Motion arrival pulses and processing loading rings.
-- [x] Update `Navbar.jsx` to display actual live metrics (RPS, Latency, Errors).
-- [x] Verify load balancing, chaos mode, and dynamic topology reactivity with discrete packets.
+- [x] Implement `SimulationEngine` class (routing, processing delays).
+- [x] Update `useDesignStore.js` for discrete packet state.
+- [x] Refactor `SimulationOverlay.jsx` for SVG `<animateMotion>`.
+- [x] Enhance `BaseNode.jsx` with arrival pulses and loading rings.
+- [x] Verify load balancing, chaos mode, and dynamic topology.
 
 ## Phase 11: Realism Enhancements
-- [x] Fix SVG `animateMotion` document timeline start-freeze by using React ref `beginElement()`.
-- [x] Prevent indefinite packet looping; nodes delete gracefully at the end of the topology flow.
-- [x] Scale mathematical RPS to emulate arbitrary large-scale production numbers.
-- [x] Auto-detect Entry Points (Top-to-Bottom Flow) without manual user designation.
-- [x] Implement semantic, custom behaviors based purely on Node Label (WAF blocks, CDN cache hits, Kafka fast ingestion).
+- [x] Fix SVG timeline freeze via `beginElement()`.
+- [x] Prevent indefinite packet looping.
+- [x] Auto-detect Entry Points (Top-to-Bottom Flow).
+- [x] Implement label-based backend behaviors (WAF, CDN, Kafka).
 
 ## Phase 12: Node Heat / Stress Visualization
-- [x] Implement per-node RPS tracking in `SimulationEngine.js`.
-- [x] Define capacity thresholds and calculate stress levels (0.0 - 1.0).
-- [x] Update `useDesignStore.js` to hold `nodeSimState` and Toast alerts.
-- [x] Refactor `BaseNode.jsx` to support 4-tier stress-based colors, glows, and pulses.
-- [x] Add the Stress Badge UI component to `BaseNode.jsx`.
-- [x] Implement Overload state (30% packet drop + UI warnings + Once-per-event Toasts).
-- [x] Add CSS animations for critical/overload states in `index.css`.
-- [x] Verify visual transitions and throughput-based behavior on MiniMap.
+- [x] Implement per-node RPS tracking & capacity thresholds.
+- [x] Add dynamic stress colors, glows, and badges to nodes.
+- [x] Implement Overload logic (30% packet drop + UI warnings).
+- [x] Verify visual transitions and MiniMap reactivity.
+
+## Phase 13: Branding & Deployment
+- [x] Link to GitHub Remote (`saurabhcr007/system-designer`).
+- [x] Rename project to **FlowForge** across all UI/metadata.
+- [x] Fix 404 setup and deploy to GitHub Pages.
+- [x] Implement premium visual polishes (Sidebar, search icon).
+
+## Phase 14: Frontend Modules
+- [x] Add 'Frontend' category (Web, Mobile, App) to components.
+- [x] Update Simulation Engine with frontend-specific latency.
+- [x] Update Starter Template with 6-tier vertical flow.
+
+## Phase 15: Mobile & Tablet Responsiveness
+- [x] Implement `useMediaQuery` for breakpoint detection.
+- [x] Add **Tap-to-Place** mechanic for mobile node creation.
+- [x] Convert Navbar/Inspector into **Bottom Sheets** for mobile.
+- [x] Increase touch targets (44px) for connection handles.
+- [x] Verify layout across 375px/768px viewports.
