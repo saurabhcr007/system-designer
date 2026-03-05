@@ -13,7 +13,7 @@
 
 **FlowForge** is an open-source, browser-based system architecture designer with real-time traffic simulation, node stress visualization, and topology-aware packet routing.
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-flowforge.io-38bdf8?style=for-the-badge)](https://YOUR_USERNAME.github.io/flowforge)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-flowforge.io-38bdf8?style=for-the-badge)](https://saurabhcr007.github.io/flowforge)
 [![MIT License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)](https://react.dev)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-f472b6?style=for-the-badge)](CONTRIBUTING.md)
@@ -93,7 +93,7 @@ Every node has a live stress level (`currentRPS / maxCapacity`) displayed as:
 ## 🚀 Quick Start
 
 ### Option 1 — Use the Live Version
-Just go to **[YOUR_USERNAME.github.io/flowforge](https://YOUR_USERNAME.github.io/flowforge)** — no install needed.
+Just go to **[YOUR_USERNAME.github.io/flowforge](https://saurabhcr007.github.io/flowforge)** — no install needed.
 
 ### Option 2 — Run Locally
 
